@@ -67,12 +67,7 @@
         </form>
     </div>
     </div>
-  <footer class="foot"> 
-    <div id=contacts>
-      <h4>Kozin A<a href ="3/solo.html">.</a>A</h4>
-      <h4>student of KUBSU 25/2</h4>
-    </div>
-  </footer>
+ 
 </body>
 
 </html>
