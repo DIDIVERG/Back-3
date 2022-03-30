@@ -11,10 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       // Если есть параметр save, то выводим сообщение пользователю.
       print('Спасибо, результаты сохранены.');
     }
-    include('form.php'); // Включаем содержимое файла form.php.
+    include('form.html'); // Включаем содержимое файла form.html.
     exit(); // Завершаем работу скрипта.
 }
 
+$result = false;
 $result;
 
 // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
@@ -57,7 +58,7 @@ try{
     $sup= implode(",",$_POST['superpower']);
 
     //Представляет собой соединение между PHP и сервером базы данных.
-    $conn = new PDO("mysql:host=localhost;dbname=u41733", 'u41733', '6809062', array(PDO::ATTR_PERSISTENT => true));
+    $conn = new PDO("mysql:host=localhost;dbname=u47605", 'u47605', '9197666', array(PDO::ATTR_PERSISTENT => true));
 
     //Подготавливает инструкцию к выполнению и возвращает объект инструкции
     $user = $conn->prepare("INSERT INTO form SET name = ?, email = ?, dob = ?, gender = ?, limbs = ?, bio = ?, che = ?");
