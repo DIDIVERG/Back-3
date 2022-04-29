@@ -158,11 +158,11 @@ $db = new PDO('mysql:host=localhost;dbname=u47605', $user, $pass, array(PDO::ATT
 
 try {
     $db->beginTransaction();
-    $stmt1 = $db->prepare("INSERT INTO form SET name = ?, email = ?, bdate = ?, 
-    gender = ? , limbs= ?, bio = ?");
+    $stmt1 = $db->prepare("INSERT INTO forms SET name = ?, email = ?, birthday = ?, 
+    gender = ? , limb_number = ?, biography = ?");
     $stmt1 -> execute([$trimmedPost['name'], $trimmedPost['email'], $trimmedPost['birthday'],
         $trimmedPost['gender'], $trimmedPost['limbs'], $trimmedPost['biography']]);
-    $stmt2 = $db->prepare("INSERT INTO super SET id = ?, ability = ?");
+    $stmt2 = $db->prepare("INSERT INTO form_ability SET form_id = ?, ability_id = ?");
     $id = $db->lastInsertId();
     foreach ($trimmedPost['superpowers'] as $s)
         $stmt2 -> execute([$id, $s]);
