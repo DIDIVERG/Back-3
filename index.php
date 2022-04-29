@@ -157,23 +157,21 @@ $pass = '9197666';
 $db = new PDO('mysql:host=localhost;dbname=u47605', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 
 try {
-    $stmt1 = $db->prepare("INSERT INTO form (name, email, bdate, gender, limbs, bio) SET name = ?, email = ?, bdate = ?, gender = ?, limbs = ?, bio = ?");
-    $stmt1 -> execute([
-        $_POST['name'],
-        strtolower($_POST['email']),
-        $_POST['bdate'],
-        $_POST['gender'],
-        $_POST['limbs'],
-        $_POST['bio']
-    ]);
-    $stmt2 = $db->prepare("INSERT INTO super (id, ability) SET id = ?, ability = ?");
+    $db->beginTransaction();
+    $stmt1 = $db->prepare("INSERT INTO form SET name = ?, email = ?, bdate = ?, 
+    gender = ? , limbs= ?, bio = ?");
+    $stmt1 -> execute([$trimmedPost['name'], $trimmedPost['email'], $trimmedPost['birthday'],
+        $trimmedPost['gender'], $trimmedPost['limbs'], $trimmedPost['biography']]);
+    $stmt2 = $db->prepare("INSERT INTO super SET id = ?, ability = ?");
     $id = $db->lastInsertId();
-    foreach ($_POST['superpowers'] as $s)
+    foreach ($trimmedPost['superpowers'] as $s)
         $stmt2 -> execute([$id, $s]);
+    $db->commit();
 }
-catch (PDOException $e) {
-    setcookie('save_error', '$e->getMessage()', 100000);
-    header('Location: index.php');
+catch(PDOException $e){
+    $db->rollBack();
+    $errorOutput = 'Error : ' . $e->getMessage();
+    include('form.php');
     exit();
 }
 // Делаем перенаправление.
